@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Đập Mấy Con Bực Bội Thoi 😤💥</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:'Poppins',sans-serif;
+    background: url('chou.png') no-repeat center center/cover;
+    overflow:hidden;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    position:relative;
+    color:#ffffff !important;
+  }
+
+  #intro{
+    position:absolute;
+    inset:0;
+    background: url('chou.png') no-repeat center center/cover;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    transition:opacity 0.8s ease;
+    z-index:10;
+    color:#ffffff;
+  }
+  #intro h2{
+    color:#ffffff;
+    font-size:1.8rem;
+    margin-bottom:10px;
+  }
+  #intro p{
+    font-size:1.1rem;
+    color:#ffffff;
+    margin-bottom:20px;
+  }
+  #start-btn{
+    background:#f59fb6;
+    color:#ffffff;
+    border:none;
+    border-radius:30px;
+    padding:12px 28px;
+    font-size:1rem;
+    cursor:pointer;
+    transition:transform 0.2s;
+  }
+  #start-btn:hover{transform:scale(1.05);}
+
+  h1{
+    font-size:1.8rem;
+    color:#ffffff;
+    margin-bottom:10px;
+    display:none;
+  }
+  #game-area{
+    position:relative;
+    width:100%;
+    height:70vh;
+    overflow:hidden;
+    display:none;
+  }
+  .bug{
+    position:absolute;
+    width:70px;
+    height:70px;
+    background:url('bucboi.png') no-repeat center/contain;
+    cursor:pointer;
+    animation: float 5s infinite ease-in-out;
+  }
+  @keyframes float{
+    0%{transform:translateY(0)}
+    50%{transform:translateY(-20px)}
+    100%{transform:translateY(0)}
+  }
+  #message{
+    font-size:1.2rem;
+    color:#ffffff;
+    margin-top:15px;
+    min-height:30px;
+    text-align:center;
+    display:none;
+  }
+  #final{
+    display:none;
+    text-align:center;
+    margin-top:20px;
+    color:#ffffff;
+  }
+  #final h2{
+    font-size:1.8rem;
+    color:#ffffff;
+  }
+  #final p{
+    font-size:1.2rem;
+    color:#ffffff;
+  }
+  #final .from{
+    font-size:1rem;
+    color:#ffffff;
+    margin-top:10px;
+    font-weight:600;
+    animation: fadeIn 2s ease-in-out;
+  }
+  #final button{
+    margin-top:15px;
+    padding:10px 22px;
+    background:#f0eeef;
+    color:#333;
+    border:none;
+    border-radius:25px;
+    font-size:1rem;
+    cursor:pointer;
+    transition:transform 0.2s;
+  }
+  #final button:hover{transform:scale(1.05);}
+  @keyframes fadeIn{
+    from{opacity:0;transform:translateY(20px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  .heart{
+    position:absolute;
+    font-size:24px;
+    animation: fly 2s linear forwards;
+    pointer-events:none;
+  }
+  @keyframes fly{
+    0%{opacity:1;transform:translateY(0) scale(1)}
+    100%{opacity:0;transform:translateY(-150px) scale(1.8)}
+  }
+
+  .hammer{
+    position:absolute;
+    width:80px;
+    height:80px;
+    background:url('https://cdn-icons-png.flaticon.com/512/1153/1153033.png') no-repeat center/contain;
+    pointer-events:none;
+    transform-origin:top right;
+    animation: hit 0.35s ease-out forwards;
+    z-index:9;
+  }
+  @keyframes hit{
+    0%{transform:rotate(-50deg) scale(1);}
+    50%{transform:rotate(15deg) scale(1.2);}
+    100%{opacity:0;transform:rotate(30deg) scale(0.9);}
+  }
+
+  .explode{
+    position:absolute;
+    width:60px;
+    height:60px;
+    background:radial-gradient(circle,#ff8aa1,#ffcad4,transparent);
+    border-radius:50%;
+    opacity:0.9;
+    animation: boom 0.5s ease-out forwards;
+    pointer-events:none;
+  }
+  @keyframes boom{
+    0%{transform:scale(0.3);opacity:1;}
+    100%{transform:scale(2);opacity:0;}
+  }
+</style>
+</head>
+<body>
+  <div id="intro">
+    <h2>Chào chị bé 💖</h2>
+    <p>Hôm nay chị đang bực đúng hong ? 😤<br>Vào đây để xả giận nha 💢🧸</p>
+    <button id="start-btn">Bắt đầu 💥</button>
+  </div>
+
+  <h1>Đập Mấy Con Bực Bội Nè💢</h1>
+  <div id="game-area"></div>
+  <div id="message"></div>
+  <div id="final">
+    <h2>🎉 Chúc mừng chị đã đập hết mấy cục bực bội 🎉</h2>
+    <p>Giờ thì cười cái coi~ 😝</p>
+    <div class="from">Người rom cục bực bội: Thỏ nhỏ 😚</div>
+    <button id="restart-btn">Chơi lại 🔁</button>
+  </div>
+
+  <audio id="start-music" src="music.mp3" loop></audio>
+  <audio id="boing" src="https://cdn.pixabay.com/download/audio/2022/03/22/audio_b25ec8a9d3.mp3?filename=cartoon-jump-6462.mp3"></audio>
+
+<script>
+const intro = document.getElementById("intro");
+const startBtn = document.getElementById("start-btn");
+const title = document.querySelector("h1");
+const gameArea = document.getElementById("game-area");
+const message = document.getElementById("message");
+const final = document.getElementById("final");
+const startMusic = document.getElementById("start-music");
+const boing = document.getElementById("boing");
+
+const messages = [ 
+  "Một con bực bội đã bị tiêu diệt 🫡",
+  "Đập thêm 3 con nữa để đc tặng liền một nụ cười full HD không che 😚",
+  "Cục bực đã được bắn ra ngoài vũ trụ và hong có vé quay lại 😎",
+  "Một con bực bội nữa vừa bị xử đẹp, linh hồn nó đang nộp đơn lên thiên đàng😌",
+  "Bực bội đã out server, chị chính thức lọt top bảng xếp hạng trùm cuối diệt mood xấu🧸"
+];
+
+let msgIndex = 0;
+let bugs = [];
+const totalBugs = 7;
+
+function random(min,max){return Math.random()*(max-min)+min;}
+
+function createBug(){
+  const bug = document.createElement("div");
+  bug.classList.add("bug");
+  bug.style.top = random(0, gameArea.clientHeight - 70) + "px";
+  bug.style.left = random(0, gameArea.clientWidth - 70) + "px";
+  bug.style.animationDuration = (3 + Math.random() * 3) + "s";
+
+  bug.addEventListener("click", (e) => {
+    const rect = bug.getBoundingClientRect();
+    createHammer(e.pageX, e.pageY);
+    createExplosion(rect.left + rect.width/2, rect.top + rect.height/2);
+    boing.currentTime = 0;
+    boing.play();
+    bug.remove();
+    bugs = bugs.filter(b => b !== bug);
+
+    message.textContent = messages[msgIndex];
+    if (msgIndex < messages.length - 1) {
+      msgIndex++;
+    }
+
+    if (!message.style.display || message.style.display === "none") {
+      message.style.display = "block";
+    }
+
+    createHeart(bug.style.left, bug.style.top);
+    if(bugs.length === 0){
+      message.style.display = "none";
+      final.style.display = "block";
+      celebrate();
+    }
+  });
+
+  gameArea.appendChild(bug);
+  bugs.push(bug);
+  moveBug(bug);
+}
+
+function moveBug(bug){
+  setInterval(() => {
+    bug.style.top = random(0, gameArea.clientHeight - 70) + "px";
+    bug.style.left = random(0, gameArea.clientWidth - 70) + "px";
+  }, 1500 + Math.random()*1000);
+}
+
+function createHeart(x,y){
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.style.left = x;
+  heart.style.top = y;
+  heart.textContent = "💖";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),2000);
+}
+
+function celebrate(){
+  for(let i=0;i<20;i++){
+    setTimeout(()=>{createHeart(random(0,window.innerWidth)+"px",random(0,window.innerHeight)+"px");},i*150);
+  }
+}
+
+function createHammer(x,y){
+  const hammer = document.createElement("div");
+  hammer.classList.add("hammer");
+  hammer.style.left = (x - 40) + "px";
+  hammer.style.top = (y - 60) + "px";
+  document.body.appendChild(hammer);
+  setTimeout(()=>hammer.remove(),350);
+}
+
+function createExplosion(x,y){
+  const boom = document.createElement("div");
+  boom.classList.add("explode");
+  boom.style.left = (x - 30) + "px";
+  boom.style.top = (y - 30) + "px";
+  document.body.appendChild(boom);
+  setTimeout(()=>boom.remove(),500);
+
+  for(let i=0;i<4;i++){
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.style.left = (x + random(-30,30)) + "px";
+    heart.style.top = (y + random(-20,20)) + "px";
+    heart.textContent = ["💖","💓","💞"][Math.floor(Math.random()*3)];
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),2000);
+  }
+}
+
+startBtn.addEventListener("click",()=>{
+  intro.style.opacity="0";
+  setTimeout(()=>intro.style.display="none",800);
+  title.style.display="block";
+  gameArea.style.display="block";
+  message.style.display="block";
+
+  startMusic.currentTime = 0;
+  startMusic.play().catch(()=>{});
+
+  for(let i=0;i<totalBugs;i++) createBug();
+});
+
+// CHỈNH SỬA: reset game mà không reload trang
+document.getElementById("restart-btn").addEventListener("click", () => {
+  final.style.display = "none";
+  message.style.display = "block";
+  msgIndex = 0;
+
+  // Xóa hết bugs cũ
+  bugs.forEach(b => b.remove());
+  bugs = [];
+
+  // Tạo lại bugs
+  for(let i=0;i<totalBugs;i++) createBug();
+});
+</script>
+</body>
+</html>
